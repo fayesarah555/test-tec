@@ -1,0 +1,33 @@
+/* App.css */
+
+/* Style for the table container */
+.table-container {
+  margin-top: 20px;
+}
+
+/* Style for the table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+/* Style for table header (th) */
+.table th {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style for table data (td) */
+.table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style for even rows (alternating background color) */
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
