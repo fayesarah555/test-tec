@@ -12,6 +12,7 @@ This project was carried out in React JS using the following libraries
 ## To launch the project
 
  you can run:
-
+ 
+### `npm i`
 ### `npm start`
 
