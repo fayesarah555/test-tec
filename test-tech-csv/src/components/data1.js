@@ -2,18 +2,31 @@ import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import '../App.css';
 
-function DataDisplay({ data }) {
+function DataDisplay({ data, searchTerm, handleSearchChange }) {
   // Date format function
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleString();
   }
 
+  // Filtrer les données en fonction du terme de recherche
+  const filteredData = data.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
   return (
     <div className="table-container">
-      {data.length ? (
+      <input
+        type="text"
+        placeholder="search..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+      {filteredData.length ? (
         <table className="table">
-          <thead>
+         <thead>
             <tr>
               <th>Date & Time</th>
               <th>measure_type</th>
@@ -31,7 +44,7 @@ function DataDisplay({ data }) {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, index) => (
+            {filteredData.map((row, index) => (
               <tr key={index}>
                 <td>{formatTimestamp(row['@timestamp'])}</td>
                 <td>{row.measure_type}</td>
@@ -58,6 +71,11 @@ function DataDisplay({ data }) {
 
 function Data({ csvFile }) {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +97,9 @@ function Data({ csvFile }) {
     fetchData();
   }, [csvFile]);
 
-  return <DataDisplay data={data} />;
+  return (
+    <DataDisplay data={data} searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+  );
 }
 
 export default Data;
