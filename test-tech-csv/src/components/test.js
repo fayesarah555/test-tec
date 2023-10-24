@@ -1,42 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Data from '../CSV-DATA2.csv'
 import Papa from 'papaparse';
-import './../App.css';
+import '../App.css';
 
-function Data2() {
-  const [data, setData] = useState([]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-        const response = await fetch(Data);
-        const reader = response.body.getReader();
-        const result = await reader.read();
-        const decoder = new TextDecoder("utf-8");
-        const csvData  = decoder.decode(result.value);
-        const parsedData = Papa.parse(csvData, {
-          header:true,
-          skipEmptyLines:true
-        }).data;
-        setData(parsedData);
-    };
-      fetchData()
-  }, []);
-
-// Date fromat
+function DataDisplay({ data }) {
+  // Date format function
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocaleString(); 
+    return date.toLocaleString();
   }
 
   return (
     <div className="table-container">
-
       {data.length ? (
         <table className="table">
           <thead>
             <tr>
-               <th>Date & Time</th>
+              <th>Date & Time</th>
               <th>measure_type</th>
               <th>measure_float</th>
               <th>brand</th>
@@ -72,10 +51,35 @@ function Data2() {
           </tbody>
         </table>
       ) : null}
-
       <br /> <br />
     </div>
   );
 }
 
-export default Data2;
+function Data({ csvFile }) {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("Fetching CSV file:", csvFile);
+      // Charger le fichier CSV spécifié
+      const response = await fetch(csvFile);
+      console.log("Response:", response);
+      const reader = response.body.getReader();
+      const result = await reader.read();
+      const decoder = new TextDecoder("utf-8");
+      const csvData = decoder.decode(result.value);
+      const parsedData = Papa.parse(csvData, {
+        header: true,
+        skipEmptyLines: true
+      }).data;
+      setData(parsedData);
+    };
+
+    fetchData();
+  }, [csvFile]);
+
+  return <DataDisplay data={data} />;
+}
+
+export default Data;
