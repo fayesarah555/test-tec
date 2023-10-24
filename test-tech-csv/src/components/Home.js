@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import data1 from '../CSV-DATA1.csv'
 import data2 from '../CSV-DATA2.csv'
 import data3 from '../CSV-DATA3.csv'
-import Data from './data1';
-import DataX from './dataX';
+import Data from './data1-csv';
+import DataX from './Upload-csv';
 
 function Home() {
   const [showData1, setShowData1] = useState(false);
