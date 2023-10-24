@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import '../App.css';
 
-function App() {
+function DataX() {
   const [data, setData] = useState([]);
 
   const handleFileUpload = (e) => {
@@ -74,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default DataX;
